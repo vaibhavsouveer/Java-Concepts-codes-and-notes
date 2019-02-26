@@ -1,0 +1,48 @@
+package coredemo;
+
+class ThreadTest extends Thread{
+	Thread t;
+	ThreadTest() {
+		System.out.println("ThreadTest constructor");
+		//THIS THREAD IS CREATED USING DEFAULT THREAD AS TARGET WITHOUT ANY TARGET.
+		t = new Thread();
+		//THIS WILL CALL RUN() OF THREAD CLASS AND SO WILL NOT DO ANYTHING.
+		t.start();
+	}
+	public void run() {
+		System.out.println("Running in ThreadTest run");
+	}
+}
+
+class ThreadTest2 extends Thread{
+	Thread t;
+	ThreadTest2() {
+		System.out.println("ThreadTest2 constructor");
+		//THIS THREAD IS ALSO CREATED USING THREAD CLASS BUT HERE THE TARGET IS SPECIFIED
+		//AS THREADTEST2 AND SO IT'S RUN WILL BE CALLED AND NOT DEFAULT ONE OF THREAD.
+		t = new Thread(this);
+		t.start();
+	}
+	public void run() {
+		System.out.println("Running in ThreadTest2 run");
+	}
+}
+
+public class CoreDemo {
+	public static void main(String[] args) {
+		//THIS THREAD IS CREATED USING USER DEFINED CLASS (VIZ. IS A SUBCLASS OF
+		//THREAD AND SO IS A THREAD) SO NO TARGET NEEDS TO BE DEFINED.
+		ThreadTest t = new ThreadTest();
+		t.run();
+		new ThreadTest2();
+		System.out.println("Running in main");
+	}
+}
+
+OUTPUT:
+
+ThreadTest constructor
+Running in ThreadTest run
+ThreadTest2 constructor
+Running in main
+Running in ThreadTest2 run
