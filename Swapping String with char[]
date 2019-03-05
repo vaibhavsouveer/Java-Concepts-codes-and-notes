@@ -1,0 +1,58 @@
+SECTION 1:
+public class CoreRunner{
+	char [] s = {'A', 'g', 'r', 'a'};
+	void swap(char a, char b) {
+		System.out.println("a = " + a + " b = " + b);
+    //FOR + OPERATION, CHAR IS AUTOMATICALLY CAST TO INT AND THEN IF WE TRY TO STORE RESULTANT INT IN A CHAR, IT WILL GIVE ERROR
+    //BECAUSE THIS TYPE OF CAST DOES NOT HAPPEN IMPLICITLY. SO WE ADD AN EXPLICIT CAST.
+		a = (char)(a + b);
+		b = (char)(a - b);
+		a = (char)(a - b);
+		System.out.println("a = " + a + " b = " + b);
+	}
+	public static void main(String[] args) {
+		CoreRunner cr = new CoreRunner();
+		int i = 0;
+		int j = cr.s.length - 1;
+		while(i < j) {
+    //WE ARE PASSING CHAR AND NOT THE INDEX.
+			cr.swap(cr.s[i], cr.s[j]);
+			i++;j--;
+		}
+    //THIS WILL PRINT AGRA AS WE ARE SWAPPING THE CHAR IN A AND B. IT DOES NOT AFFECT THE CHAR ARRAY.
+		System.out.println(cr.s);
+	}
+}
+
+OUTPUT:
+a = A b = a
+a = a b = A
+a = g b = r
+a = r b = g
+Agra
+
+
+
+SECTION 2: TO SWAP THE CHAR[]
+
+public class CoreRunner{
+	char [] s = {'A', 'g', 'r', 'a'};
+	void swap(int i, int j) {
+		char c = s[i];
+		s[i] = s[j];
+		s[j] = c;
+	}
+	public static void main(String[] args) {
+		CoreRunner cr = new CoreRunner();
+		int i = 0;
+		int j = cr.s.length - 1;
+		while(i < j) {
+			cr.swap(i, j);
+			i++;j--;
+		}
+		System.out.println(cr.s);
+	}
+}
+
+OUTPUT:
+argA
