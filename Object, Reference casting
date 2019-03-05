@@ -1,0 +1,46 @@
+SECTION 1:
+
+class A {
+	void run() {
+		System.out.println("Running in A");
+	}
+}
+class B extends A {
+	void run() {
+		System.out.println("Running in B");
+	}
+}
+public class CoreRunner extends B{
+	void run() {
+		System.out.println("Running in CoreRunner");
+	}
+	void show() {
+		System.out.println("Showing CoreRunner");
+	}
+	public static void main(String[] args) {
+		//OBJECT WILL BE CREATED FOR CORERUNNER AS NEW IS CALLED ON ITS CONSTRUCTOR.
+    //CAST (B) DOES NOT MAKE IT A B TYPE OBJECT. IT WILL BE CORERUNNER OBJECT.
+    //SO FINAL RESSUTL IS SIMILAR TO- A CR = NEW CORERUNNER();
+		A cr  = (B) new CoreRunner();
+    //BECAUSE OF RESTRICTION OF POLYMORPHISM WHERE ONLY THOSE METHODS CAN BE CALLED
+    //ON THE OBJECT WHICH ARE PRESENT IN REFERENCE TYPE WE CANNOT CALL SHOW() ON CR
+    //AS A DOES NOT SHOW(). IF WE WANT TO CALL THE FUNCTIONS NOT IN THE REFERENCE TYPE
+    //WE DOWNCAST THE REFERENCE. THE ORDER OF () IS VERY IMPORTANT. (CORERUNNER) CR.SHOW()
+    //WILL NOT WORK
+		//((CoreRunner)cr).show();
+		cr.run();
+
+	}
+
+}
+
+OUTPUT:
+Running in CoreRunner
+
+
+SECTION 2: MORE ON DOWNCASTING
+If you try to downcast (up to down in a hierarchy i.e. parent to child though may not be immediate parent-child) 2 cases arise:
+  a) the classes may be part of same hierarchy. E.g. cat and dog are animal. So cat and dog are sibling and one cannot be cast
+  into another. This however will be ignored at compile time and will result in ClassCastException in runtime.
+  b) when classes not part of hierarchy and are completely unrelated. E.g. cat and bike. None of them can be cast to the other
+  and will result in compiler error that cat cannot be cast to bike.
