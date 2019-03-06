@@ -18,14 +18,14 @@ This will not compile.
 int[] testScores;
 testScores = {4,7,2}; 	this will not compile as testScores, an object, has not been instantiated. Error message is “Array constants can only be used in initializers”.
 •	int[][] arr = new int[3][]; only the first index is needed because each (of 3) element of ‘arr’ is an array of int and so will hold only 1 reference to int array.
-•	int[][] list = new int[2][];
+•	int[][] a = new int[2][];
 a[0][0] = 90; will not compile. Error message: “ Exception in thread "main" java.lang.NullPointerException at coredemo.CoreDemo.main(CoreDemo.java:15)”
-As each element of ‘list’ is an array viz. an object, it needs to be initialized before use.
+As each element of ‘a’ is an array viz. an object, it needs to be initialized before use.
 int[][] a = new int[2][];
 a[0] = new int[2];
 a[0][0] = 90;
 System.out.println(a[0][0]); this will output 90.
 •	Reassigning the array reference to another array object (of the same type) is allowed. For e.g. following is correct – 
-int[] dots = new int[] {2,3} ;
+int[] dots = new int[] {2,3, 7, 27} ;
 int[] pots = {12,63} ;
 dots = pots;	this is fine.
