@@ -1,0 +1,31 @@
+OBJECTS:
+•You may see the words "construct", "create", and "instantiate" used interchangeably. They all mean, "An object is built on the heap."
+This also implies that the object's constructor runs, as a result of the construct/create/instantiate code. You can say with certainty, for example, that any code that uses the keyword new will (if it runs successfully) cause the class constructor and all superclass constructors to run.
+
+ARRAYS:
+Accessing an out of range array index caused Exception at runtime and not a complier error.
+
+Anonymous array is one which does not have a name and are meant for one time use when passing argument to a function accepting array.
+E.g. sum(new int[]);
+
+WAYS OF CREATING AN ARRAY:
+int[] dots = new int[] {2,3};
+int[] dots2 = {2,3}; 	note that both of these are correct, with and without ‘new int[]’. Also, dots2 doesn’t need ‘new int[]’ when both, declaration and instantiation is happening in the same line. But if do them in separate lines, as done for ‘testScores’, then it will not compile.
+This is okay.
+int[] testScores2;
+testScores2 = new int[] {4,7,2};
+This will not compile.
+int[] testScores;
+testScores = {4,7,2}; 	this will not compile as testScores, an object, has not been instantiated. Error message is “Array constants can only be used in initializers”.
+•	int[][] arr = new int[3][]; only the first index is needed because each (of 3) element of ‘arr’ is an array of int and so will hold only 1 reference to int array.
+•	int[][] list = new int[2][];
+a[0][0] = 90; will not compile. Error message: “ Exception in thread "main" java.lang.NullPointerException at coredemo.CoreDemo.main(CoreDemo.java:15)”
+As each element of ‘list’ is an array viz. an object, it needs to be initialized before use.
+int[][] a = new int[2][];
+a[0] = new int[2];
+a[0][0] = 90;
+System.out.println(a[0][0]); this will output 90.
+•	Reassigning the array reference to another array object (of the same type) is allowed. For e.g. following is correct – 
+int[] dots = new int[] {2,3} ;
+int[] pots = {12,63} ;
+dots = pots;	this is fine.
