@@ -1,0 +1,75 @@
+import java.util.*;
+class Immute {
+	//FOR PRIMITIVE VARIABLES OF CLASS, JUST MAKE THEM PRIVATE
+	//AND DO NOT PROVIDE SETTER METHODS.
+	private int a;
+	private String s;
+	//FOR OBJECT VARIABLES WE NEED TO CODE CAREFULLY.
+	//MARKING AS PRIVATE IS NOT ENOUGH.
+	private List<Integer> col;
+	Immute(int x, String y, List z) {
+		a = x;
+		s = y;
+		//COL IS CREATED BY COPYING THE VALUES FROM Z AND DOES NOT
+		//POINT TO IT. SO IF VALUES IN Z IS CHANGED, COL WILL NOT CHANGE.
+		col = new ArrayList<Integer>(z);
+		
+		//THIS WILL MEAN THAT COL JUST REFERS TO Z AND IF WE CHANGE Z,
+		//COL VIZ. POINTING TO Z WILL ALSO SHOW CHANGED VALUES.
+		//col = z; 
+	}
+	void displayImmute() {
+		System.out.println("String = " + s + "\nInteger = " + a +
+				"\nList = " + col);
+	}
+	int retInt() { return a; }
+	String retString() { return s; }
+	List<Integer> retList() { 
+		//THIS WILL RETURN A REF TO CLASS' LIST AND SO MEMBER OBJECT
+		//WILL LEAK OUTSIDE THE CLASS. TO PREVENT THIS, ALWAYS RETURN
+		//CLONE OF MEMBER OBJECTS.
+		//return col;
+		//NOTE THE CASTINGS NEEDED TO RETURN THE LIST. COL IS INTERFACE
+		//AND SO DOES NOT HAVE CLONE(), SO WE DOWNCAST IT. CLONE() RETURNS
+		//OBJECT SO AGAIN DOWNCAST THAT TO A LIST<INTEGER>.
+		return (List<Integer>) ((ArrayList)col).clone();
+		}
+}
+
+public class ImmutableRunner {
+
+	public static void main(String[] args) {
+		ImmutableRunner ob = new ImmutableRunner();
+		int i = 10;
+		String s = "Vaibhav";
+		List<Integer> l = new ArrayList<Integer>();
+		l.add(1);
+		l.add(2);
+		l.add(3);
+		Immute im = new Immute(i, s, l);
+		im.displayImmute();
+		System.out.println("Changing1");
+		//CANNOT DIRECTLY (USING OBJECT) ACCESS THE VARIABLES AS
+		//THEY ARE PRIVATE. AND NO SETTER METHODS ARE PROVIDED SO
+		//PRIMITIVE VARIABLES ARE SECURED FROM ANY CHANGE.
+		//im.col.add(8);
+		//im.a = 99;
+		//COL DOES NOT REFER TO L, SO THOUGH 8 WILL BE ADDED IN L
+		//IT WILL NOT BE PRESENT IN COL.
+		l.add(8);
+		im.displayImmute();
+		System.out.println("Changing2");
+		//SETTER METHODS SHOULD NOT BE PRESENT IN IMMUTABLE CLASS.
+		//BUT GETTER METHODS ARE USUALLY DEFINED. RETURNING PRIMITIVE
+		//IS EASY AS THEY ARE PASSED BY VALUE AND NOT THE REFERENCE OF
+		//ORIGINAL VARIABLE AND SO IF THE AFTER RETURNING THE VALUE IS
+		//CHANGED, IT WILL NOT AFFECT THE IMMUTABLE CLASS.
+		//BUT WE NEED TO BE CAREFUL WHEN RETURNING OBJECT AS THEY ARE
+		//PASSED BY REFERENCE. ALWAYS RETURN OBJECT AFTER CLONING AND 
+		//NOT THE ORIGINAL CLASS OBJECT'S REF.
+		l = im.retList();
+		l.add(88);
+		im.displayImmute();
+	}
+
+}
