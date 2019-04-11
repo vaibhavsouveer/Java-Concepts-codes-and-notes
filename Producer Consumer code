@@ -1,0 +1,52 @@
+class PC {
+	public void consume() {
+		//to ensure produce() runs first.
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(int i = 1; i <= 5; i++) {
+			System.out.println("Consumed: " + i);
+			synchronized(this) {
+				//notify that consumption is done.
+				notify();
+			}
+		}
+	}
+	public void produce() {
+		for(int i = 1; i <= 5; i++) {
+			System.out.println("Produced: " + i);
+			try {
+				synchronized(this) {
+					wait();
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+public class ThreadDemo {
+
+	public static void main(String[] args) {
+		PC obj = new PC();
+		Thread p = new Thread() {
+			 public void run() {
+				 obj.produce();
+			 }
+		 };
+		 Thread c = new Thread() {
+			 public void run() {
+				 obj.consume();
+			 }
+		 };
+		 
+		 p.start();
+		 c.start();
+	}
+
+}
