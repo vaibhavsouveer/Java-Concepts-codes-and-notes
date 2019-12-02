@@ -1,0 +1,35 @@
+package playground;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+public class CoreJavaPlayground {
+  public static void main(String args[]) throws InterruptedException, ExecutionException {
+    List<String> nameL = new ArrayList<>(Arrays.asList("Vaibhav".split("")));
+    
+    System.out.println("isAnagram?  " + isAnagram("vaibhav", "visbahv"));
+  }
+
+  public static boolean isAnagram(String s1, String s2) {
+    if(s1.length() != s2.length()) return false;
+
+    List<String> l1 = new ArrayList<>(Arrays.asList(s1.split("")));
+    List<String> l2 = new ArrayList<>(Arrays.asList(s2.split("")));
+
+    l2.forEach(
+        ch -> {
+          if (l1.contains(ch)) {
+            l1.remove(ch);
+          }
+          System.out.println("ch = " + ch + " l1 -> " + l1 +" AND l2 -> " +l2);
+        });
+
+    if (l1.isEmpty()) return true;
+    return false;
+  }
+}
